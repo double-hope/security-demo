@@ -12,7 +12,8 @@
             "providers/*": ["providers/*"],
             "router/*": ["router/*"],
             "services/*": ["services/*"],
-            "store/*": ["store/*"]
+            "store/*": ["store/*"],
+            "utils/*": ["utils/*"]
         }
     },
     "include": [

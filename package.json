@@ -7,7 +7,11 @@
     "@emotion/babel-preset-css-prop": "^11.10.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@reduxjs/toolkit": "^1.9.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -45,7 +49,9 @@
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-refresh": "^0.11.0",
+    "react-router-dom": "^6.8.2",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -73,7 +79,10 @@
     "parserOptions": {
       "babelOptions": {
         "presets": [
-          ["babel-preset-react-app", false]
+          [
+            "babel-preset-react-app",
+            false
+          ]
         ]
       }
     }
@@ -149,6 +158,8 @@
       "react-app",
       "@emotion/babel-preset-css-prop"
     ],
-    "plugins": ["@emotion/babel-plugin"]
+    "plugins": [
+      "@emotion/babel-plugin"
+    ]
   }
 }
