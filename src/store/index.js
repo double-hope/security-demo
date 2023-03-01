@@ -16,6 +16,7 @@ const store = configureStore({
         auth,
     }),
     middleware,
+    devTools: false
 });
 
 export { store };

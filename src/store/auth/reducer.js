@@ -4,6 +4,7 @@ import { signIn } from './actions';
 
 const initialState = {
     user: null,
+    token: null,
     status: DataStatusEnum.IDLE
 }
 

@@ -1,3 +1,8 @@
 import { createContext } from 'react';
 
-export const AuthContext = createContext(!!sessionStorage.getItem('token'));
+const initialState = {
+    user: null,
+    accessToken: ''
+}
+
+export const AuthContext = createContext(initialState);

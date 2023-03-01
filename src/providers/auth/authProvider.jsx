@@ -2,7 +2,12 @@ import { AuthContext } from 'context';
 import { useState } from 'react';
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState(!!sessionStorage.getItem('token'));
+    const initialState = {
+        user: null,
+        accessToken: ''
+    }
+
+    const [auth, setAuth] = useState(initialState);
     const authProvidedValue = { auth, setAuth };
 
     return (
