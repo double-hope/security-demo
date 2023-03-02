@@ -4,7 +4,7 @@ import { signIn, signUp, refreshToken } from './actions';
 
 const initialState = {
     user: null,
-    token: null,
+    tokens: [],
     message: null,
     status: DataStatusEnum.IDLE
 }
@@ -16,8 +16,8 @@ const reduser = createReducer(initialState, (builder) => {
     });
 
     builder.addCase(signIn.fulfilled, (state, { payload }) => {
-        const { user } = payload;
-        state.user = user;
+        const { tokens } = payload;
+        state.tokens = tokens;
         state.status = DataStatusEnum.SUCCESS;
     });
 
@@ -42,8 +42,8 @@ const reduser = createReducer(initialState, (builder) => {
     });
 
     builder.addCase(refreshToken.fulfilled, (state, { payload }) => {
-        const { token } = payload;
-        state.token = token;
+        const { tokens } = payload;
+        state.tokens = tokens;
         state.status = DataStatusEnum.SUCCESS;
     });
 

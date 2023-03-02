@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType, PathType } from './common';
 
 const signIn = createAsyncThunk(ActionType.SIGN_IN, async (params, { extra }) => ({
-    user: await extra.authService.signIn(PathType.SIGN_IN, {
+    tokens: await extra.authService.signIn(PathType.SIGN_IN, {
         ...params
     }),
 }));
@@ -14,7 +14,7 @@ const signUp = createAsyncThunk(ActionType.SIGN_UP, async (params, { extra }) =>
 }));
 
 const refreshToken = createAsyncThunk(ActionType.REFRESH_TOKEN, async (params, { extra }) => ({
-    token: await extra.authService.signUp(PathType.REFRESH_TOKEN, {
+    tokens: await extra.authService.signUp(PathType.REFRESH_TOKEN, {
         ...params
     }),
 }));
