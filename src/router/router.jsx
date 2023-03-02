@@ -1,4 +1,4 @@
-import { Layout, SignInForm, SignUpForm } from 'components';
+import { Layout, SignInForm, SignUpForm, Verify } from 'components';
 import MissingPage from 'pages/missing/Missing';
 import SignPage from 'pages/sign/Sign';
 import React from 'react';
@@ -11,6 +11,7 @@ const AppRouter = () => {
           <Route path='login' element={<SignPage />} />
           <Route path='sign-up' element={<SignUpForm />} />
           <Route path='sign-in' element={<SignInForm />} />
+          <Route path='verify' element={<Verify />} />
           <Route path='*' element={<MissingPage />} />
         </Route>
     </Routes>
