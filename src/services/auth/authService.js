@@ -42,6 +42,7 @@ class Auth {
             method: HttpMethodEnum.POST,
             payload: JSON.stringify(payload),
             contentType: 'application/json',
+            credentials: true,
         })
     }
 

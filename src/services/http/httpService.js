@@ -5,9 +5,10 @@ let okStatus;
 
 class Http {
     load(url, options){ 
-        const { method = HttpMethodEnum.GET, payload = null, contentType } = options;
+        const { method = HttpMethodEnum.GET, payload = null, contentType, credentials } = options;
         const headers = this._getHeaders({
             contentType,
+            credentials,
         });
 
         return fetch(url, {
@@ -21,12 +22,12 @@ class Http {
             .catch(this._throwError);
     }
 
-    _getHeaders({ contentType }) {
+    _getHeaders({ contentType, credentials }) {
         const headers = new Headers();
+
+        if (contentType) headers.append(HttpHeaderEnum.CONTENT_TYPE, contentType);
         
-        if (contentType) {
-            headers.append(HttpHeaderEnum.CONTENT_TYPE, contentType);
-        }
+        if(credentials) headers.append(HttpHeaderEnum.CREDENTIALS, credentials);
 
         if(sessionStorage.getItem('accessToken')) {
             headers.append(HttpHeaderEnum.AUTHORIZATION, `Bearer ${sessionStorage.getItem('accessToken')}`);
@@ -55,8 +56,8 @@ class Http {
     _sendMessage(response) {
         const { message } = response;
 
-        if(!okStatus)
-            throw new Error(message)
+        if(!okStatus) throw new Error(message)
+        else return response;
     }
 
     _throwError(err) {
