@@ -19,7 +19,8 @@ const store = configureStore({
         oAuth,
     }),
     middleware,
-    devTools: false
+    // uncomment in prod
+    // devTools: false 
 });
 
 export { store };
