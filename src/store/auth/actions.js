@@ -7,10 +7,10 @@ const signIn = createAsyncThunk(ActionType.SIGN_IN, async (params, { extra }) =>
     }),
 }));
 
-const setCredentials = createAsyncThunk(ActionType.SIGN_IN, async (params, { extra }) => ({
-    user: await extra.authService.setCredentials(PathType.SIGN_IN, {
+const signUp = createAsyncThunk(ActionType.SIGN_UP, async (params, { extra }) => ({
+    user: await extra.authService.signUp(PathType.SIGN_UP, {
         ...params
     }),
 }));
 
-export { signIn, setCredentials };
+export { signIn, signUp };
