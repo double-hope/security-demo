@@ -23,18 +23,16 @@ class Auth {
         })
     }
 
-    verifyRegistration(path, payload){
+    verifyRegistration(path){
         return this._http.load(this._getUrl(path), {
-            method: HttpMethodEnum.POST,
-            payload: JSON.stringify(payload),
+            method: HttpMethodEnum.GET,
             contentType: 'application/json',
         })
     }
 
-    resendEmailVerificationToken(path, payload){
+    resendEmailVerificationToken(path){
         return this._http.load(this._getUrl(path), {
-            method: HttpMethodEnum.POST,
-            payload: JSON.stringify(payload),
+            method: HttpMethodEnum.GET,
             contentType: 'application/json',
         })
     }

@@ -7,10 +7,11 @@ class OAuth {
         this._basePath = ApiPath.OAUTH;
     }
 
-    authorize(path, payload){
-        return this._http.load(this._getUrl(path), {
-            method: HttpMethodEnum.POST,
-            payload: JSON.stringify(payload),
+    authorize(path, params){
+        const url = `${path}${params?.service}?${this._getQueryString(params?.params)}`;
+        return this._http.load(this._getUrl(url), {
+            method: HttpMethodEnum.GET,
+            // payload: JSON.stringify(payload),
             contentType: 'application/json',
         })
     }
@@ -22,7 +23,7 @@ class OAuth {
     _getQueryString(obj) {
         const keyValuePairs = [];
         for (const key in obj) {
-          keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+          keyValuePairs.push(key + '=' + obj[key]);
         }
         return keyValuePairs.join('&');
     }
