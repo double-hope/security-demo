@@ -1,6 +1,6 @@
 import { DataStatusEnum } from 'common';
 import { createReducer } from '@reduxjs/toolkit';
-import { signIn, signUp } from './actions';
+import { signIn, signUp, refreshToken } from './actions';
 
 const initialState = {
     user: null,
@@ -35,6 +35,16 @@ const reduser = createReducer(initialState, (builder) => {
         const { message } = error;
         state.message = message;
         state.status = DataStatusEnum.ERROR;
+    });
+
+    builder.addCase(refreshToken.pending, (state) => {
+        state.status = DataStatusEnum.PENDING;
+    });
+
+    builder.addCase(refreshToken.fulfilled, (state, { payload }) => {
+        const { token } = payload;
+        state.token = token;
+        state.status = DataStatusEnum.SUCCESS;
     });
 
 });

@@ -13,4 +13,10 @@ const signUp = createAsyncThunk(ActionType.SIGN_UP, async (params, { extra }) =>
     }),
 }));
 
-export { signIn, signUp };
+const refreshToken = createAsyncThunk(ActionType.REFRESH_TOKEN, async (params, { extra }) => ({
+    token: await extra.authService.signUp(PathType.REFRESH_TOKEN, {
+        ...params
+    }),
+}));
+
+export { signIn, signUp, refreshToken };
