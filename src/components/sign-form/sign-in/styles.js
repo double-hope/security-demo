@@ -4,7 +4,7 @@ export const wrapper = () => css`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction:column;
+    flex-direction: column;
     padding: 40px;
 `;
 
@@ -28,4 +28,11 @@ export const errmsg = () => css`
 
 export const line = () => css`
     text-decoration: underline;
+`;
+
+export const link = () => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `;

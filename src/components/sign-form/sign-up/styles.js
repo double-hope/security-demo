@@ -56,3 +56,10 @@ export const warning = () => css`
 export const line = () => css`
     text-decoration: underline;
 `;
+
+export const link = () => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`;

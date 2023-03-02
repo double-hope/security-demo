@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from 'components/primitives';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/auth';
+import { DataStatusEnum } from 'common/enums';
 
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -14,7 +15,7 @@ const SignUpForm = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user, message } = useSelector(state => state.auth);
+    const { message, status } = useSelector(state => state.auth);
 
     const emailRef = useRef();
     const errorRef = useRef();
@@ -33,6 +34,8 @@ const SignUpForm = () => {
 
     const [errMessage, setErrMessage] = useState(message);
     const [success, setSuccess] = useState(false);
+
+    const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
         emailRef.current.focus();
@@ -64,13 +67,21 @@ const SignUpForm = () => {
             return;
         }
         
-        dispatch(signUp({ email, password }))
+        dispatch(signUp({ email, password }));
+        setDisabled(false);
     }
     
     useEffect(() => {
         if(!!message)
             setErrMessage(message);
     }, [message]);
+
+    useEffect(() => {
+        if(status === DataStatusEnum.SUCCESS) navigate('/verify');
+        if(status !== DataStatusEnum.PENDING) setDisabled(true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status]);
 
     return (
         <>
@@ -114,7 +125,7 @@ const SignUpForm = () => {
 
                     
                     <p id='emailnote' css={emailFocus && email && !validEmail ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning}/><br />
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning}/>
                         Email is required and must be in the format user@example.com.
                     </p>
 
@@ -141,7 +152,7 @@ const SignUpForm = () => {
                     </Input>
 
                     <p id='pwdnote' css={passwordFocus && !validPassword ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} /><br />
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} />
                         8 to 24 characters.<br />
                         Must include uppercase and lowercase letters, a number and a special character.<br />
                         Allowed special characters: <span aria-label='exclamation mark'>!</span>
@@ -172,14 +183,14 @@ const SignUpForm = () => {
                     </Input>
 
                     <p id='confirmnote' css={matchFocus && !validMatch ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} /><br />
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} />
                         Must match the first password input field.
                     </p>
 
-                    <Button text='Sign Up' disabled={!validEmail || !validPassword || !validMatch} />
+                    <Button text='Sign Up' disabled={!validEmail || !validPassword || !validMatch || !disabled} />
                 </form>
 
-                <p>
+                <p css={styles.link}>
                     Already have an account?<br />
                     <span css={styles.line}>
                         <Link to={'/sign-in'}>Sign In</Link>

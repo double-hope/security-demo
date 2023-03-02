@@ -76,7 +76,7 @@ const SignInForm = () => {
                     
                     <Button text='Sign In' />
                 </form>
-                <p>
+                <p css={styles.link}>
                     Don't have an account?<br />
                     <span css={styles.line}>
                         <Link to={'/sign-up'}>Sign Up</Link>
