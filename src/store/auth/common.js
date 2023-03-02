@@ -1,5 +1,6 @@
 const ActionType = {
     SIGN_IN: '/auth/sign-in',
+    CREDENTIALS: '/credentials',
 };
 
 const PathType = {

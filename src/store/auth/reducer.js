@@ -19,6 +19,7 @@ const reduser = createReducer(initialState, (builder) => {
         state.user = user;
         state.status = DataStatusEnum.SUCCESS;
     });
+
 });
 
 export { reduser };
