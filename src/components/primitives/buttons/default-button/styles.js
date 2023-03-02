@@ -16,4 +16,10 @@ export const button = () => css`
     font-weight: 600;
     font-size: 1.05rem;
     cursor: pointer;
+
+    &:disabled {
+        background-color: #b0b3b8;
+        color: #575859;
+        cursor: not-allowed;
+    }
 `;
