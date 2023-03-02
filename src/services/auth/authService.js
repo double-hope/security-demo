@@ -45,7 +45,6 @@ class Auth {
         })
     }
 
-
     _getUrl(path = '') {
         return `${this._baseURL}${this._basePath}${path}`;
     }
