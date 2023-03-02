@@ -3,7 +3,7 @@ import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from 'components/primitives';
+import { Button, Input } from 'components/primitives';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/auth';
 
@@ -66,6 +66,11 @@ const SignUpForm = () => {
         
         dispatch(signUp({ email, password }))
     }
+    
+    useEffect(() => {
+        if(!!message)
+            setErrMessage(message);
+    }, [message]);
 
     return (
         <>
@@ -77,49 +82,44 @@ const SignUpForm = () => {
                 </p>
             </section>
         ) : (
-            <section>
+            <section  css={styles.wrapper}>
                 <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
                 <h1>Register</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} css={styles.signForm}>
 
-                    <label htmlFor='email'>
-                        Email:
-                        <span css={validEmail ? styles.valid : styles.hide}>
-                            <FontAwesomeIcon icon={faCheck} />
-                        </span>
-                        <span css={validEmail || !email ? styles.hide : styles.invalid}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </span>
-                    </label>
-                    <input 
-                        type='text'
-                        id='email'
-                        ref={emailRef}
-                        autoComplete='off'
+                    <Input 
+                        type='text' 
+                        id='email' 
+                        inputRef={emailRef}
                         onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        autoComplete='off'
                         required
                         aria-invalid={validEmail ? 'false' : 'true'}
                         aria-describedby='emailnote'
                         onFocus={() => setEmailFocus(true)}
                         onBlur={() => setEmailFocus(false)}
-                    />
-                    <p id='emailnote' css={emailFocus && email && !validEmail ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle}/>
-                        Email is required and must be in the format user@example.com.<br />
-                    </p>
 
-
-                    <label htmlFor='password'>
-                        Password:
-                        <span css={validPassword ? styles.valid : styles.hide}>
+                        label='Email:'
+                    >
+                        
+                        <span css={validEmail ? styles.valid : styles.hide}>
                             <FontAwesomeIcon icon={faCheck} />
                         </span>
-                        <span css={validPassword || !password ? styles.hide : styles.invalid}>
+                        <span css={validEmail || !email ? styles.hide : styles.invalid}>
                             <FontAwesomeIcon icon={faTimes} />
-                        </span>
-                    </label>
-                    <input 
-                        type='password'
+                        </span> 
+
+                    </Input>
+
+                    
+                    <p id='emailnote' css={emailFocus && email && !validEmail ? styles.instructions : styles.offscreen}>
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning}/><br />
+                        Email is required and must be in the format user@example.com.
+                    </p>
+
+                    <Input 
+                        type='password' 
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -127,9 +127,21 @@ const SignUpForm = () => {
                         aria-describedby='pwdnote'
                         onFocus={() => setPasswordFocus(true)}
                         onBlur={() => setPasswordFocus(false)}
-                    />
+
+                        label='Password:'
+                    >
+                        
+                        <span css={validPassword ? styles.valid : styles.hide}>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </span>
+                        <span css={validPassword || !password ? styles.hide : styles.invalid}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </span>
+                        
+                    </Input>
+
                     <p id='pwdnote' css={passwordFocus && !validPassword ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle}/>
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} /><br />
                         8 to 24 characters.<br />
                         Must include uppercase and lowercase letters, a number and a special character.<br />
                         Allowed special characters: <span aria-label='exclamation mark'>!</span>
@@ -137,18 +149,8 @@ const SignUpForm = () => {
                         <span aria-label='dollar sign'>$</span> <span aria-label='percent'>%</span>
                     </p>
 
-
-                    <label htmlFor='confirm_password'>
-                        Confirm Password:
-                        <span css={validMatch && matchPassword ? styles.valid : styles.hide}>
-                            <FontAwesomeIcon icon={faCheck} />
-                        </span>
-                        <span css={validMatch || !matchPassword ? styles.hide : styles.invalid}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </span>
-                    </label>
-                    <input 
-                        type='password'
+                    <Input 
+                        type='password' 
                         id='confirm_password'
                         onChange={(e) => setMatchPassword(e.target.value)}
                         required
@@ -156,9 +158,21 @@ const SignUpForm = () => {
                         aria-describedby='confirmnote'
                         onFocus={() => setMatchFocus(true)}
                         onBlur={() => setMatchFocus(false)}
-                    />
+
+                        label='Confirm Password:'
+                    >
+                        
+                        <span css={validMatch && matchPassword ? styles.valid : styles.hide}>
+                            <FontAwesomeIcon icon={faCheck} />
+                        </span>
+                        <span css={validMatch || !matchPassword ? styles.hide : styles.invalid}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </span>
+                        
+                    </Input>
+
                     <p id='confirmnote' css={matchFocus && !validMatch ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle}/>
+                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} /><br />
                         Must match the first password input field.
                     </p>
 
@@ -166,7 +180,7 @@ const SignUpForm = () => {
                 </form>
 
                 <p>
-                    Already registered?<br />
+                    Already have an account?<br />
                     <span css={styles.line}>
                         <Link to={'/sign-in'}>Sign In</Link>
                     </span>

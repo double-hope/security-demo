@@ -3,6 +3,7 @@ import * as styles from './styles';
 import { Button, OAuthButton } from 'components/primitives';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { authorize } from 'store/oauth';
 
 const Sign = () => {
 
@@ -11,15 +12,17 @@ const Sign = () => {
 
   const google = (e) => {
     e.preventDefault();
+    dispatch(authorize({service: '/google', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
   }
   
   const github = (e) => {
     e.preventDefault();
+    dispatch(authorize({service: '/github', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
   }
 
-  
   const facebook = (e) => {
     e.preventDefault();
+    dispatch(authorize({service: '/facebook', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
   }
 
   const register = (e) => {

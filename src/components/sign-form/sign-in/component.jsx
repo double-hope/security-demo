@@ -3,7 +3,7 @@ import * as styles from './styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'store/auth';
-import { Button } from 'components/primitives';
+import { Button, Input } from 'components/primitives';
 
 const SignInForm = () => {
 
@@ -47,32 +47,31 @@ const SignInForm = () => {
                 </p>
             </section>
             ) : (
-            <section>
+            <section css={styles.wrapper}>
                 <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
                 <h1>Sign In</h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor='email'>
-                        Email:
-                    </label>
-                    <input 
-                        type='text'
-                        id='email'
-                        ref={emailRef}
-                        autoComplete='off'
+                <form onSubmit={handleSubmit} css={styles.signForm}>
+
+                    <Input 
+                        type='text' 
+                        id='email' 
+                        inputRef={emailRef}
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
+                        autoComplete='off'
                         required
+
+                        label='Email:'
                     />
 
-                    <label htmlFor='password'>
-                        Password:
-                    </label>
-                    <input 
-                        type='password'
-                        id='password'
+                    <Input 
+                        type='password' 
+                        id='password' 
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         required
+
+                        label='Password:'
                     />
                     
                     <Button text='Sign In' />
