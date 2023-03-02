@@ -1,6 +1,7 @@
 import { HttpMethodEnum, HttpHeaderEnum } from 'common';
 
 export let statusCode;
+let okStatus;
 
 class Http {
     load(url, options){ 
@@ -16,6 +17,7 @@ class Http {
         })
             .then(this._checkStatus)
             .then(this._parseJSON)
+            .then(this._sendMessage)
             .catch(this._throwError);
     }
 
@@ -34,16 +36,13 @@ class Http {
     }
 
     _checkStatus(response) {
-        const { ok: isOk, status, statusText } = response;
+        const { ok, status } = response;
 
         statusCode = status;
+        okStatus = ok;
 
-        if( status === 401){
+        if(status === 401){
             console.log('log-out');
-        }
-
-        if (!isOk) {
-            throw new Error(`${status}: ${statusText}`);
         }
 
         return response;
@@ -51,6 +50,13 @@ class Http {
 
     _parseJSON(response) {
         return response.json();
+    }
+
+    _sendMessage(response) {
+        const { message } = response;
+
+        if(!okStatus)
+            throw new Error(message)
     }
 
     _throwError(err) {
