@@ -3,20 +3,25 @@ import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, useNavigate } from 'react-router-dom';
+import { Button } from 'components/primitives';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUp } from 'store/auth';
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const SignUpForm = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { user, message } = useSelector(state => state.auth);
 
-    const userRef = useRef();
+    const emailRef = useRef();
     const errorRef = useRef();
-
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    
+    const [email, setEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
 
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
@@ -26,17 +31,17 @@ const SignUpForm = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMessage, setErrMessage] = useState('');
+    const [errMessage, setErrMessage] = useState(message);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
+        emailRef.current.focus();
     }, []);
 
     useEffect(() => {
-        const result = USER_REGEX.test(user);
-        setValidName(result);
-    }, [user]);
+        const result = EMAIL_REGEX.test(email);
+        setValidEmail(result);
+    }, [email]);
 
     useEffect(() => {
         const result = PASSWORD_REGEX.test(password);
@@ -47,18 +52,19 @@ const SignUpForm = () => {
 
     useEffect(() => {
         setErrMessage('');
-    }, [user, password, matchPassword]);
+    }, [email, password, matchPassword]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const v1 = USER_REGEX.test(user);
+        const v1 = EMAIL_REGEX.test(email);
         const v2 = PASSWORD_REGEX.test(password);
         if(!v1 || !v2) {
             setErrMessage('Invalid Entry');
             return;
         }
-        setSuccess(true);
+        
+        dispatch(signUp({ email, password }))
     }
 
     return (
@@ -75,33 +81,33 @@ const SignUpForm = () => {
                 <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
                 <h1>Register</h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='username'>
-                        Username:
-                        <span css={validName ? styles.valid : styles.hide}>
+
+                    <label htmlFor='email'>
+                        Email:
+                        <span css={validEmail ? styles.valid : styles.hide}>
                             <FontAwesomeIcon icon={faCheck} />
                         </span>
-                        <span css={validName || !user ? styles.hide : styles.invalid}>
+                        <span css={validEmail || !email ? styles.hide : styles.invalid}>
                             <FontAwesomeIcon icon={faTimes} />
                         </span>
                     </label>
                     <input 
                         type='text'
-                        id='username'
-                        ref={userRef}
+                        id='email'
+                        ref={emailRef}
                         autoComplete='off'
-                        onChange={(e) => setUser(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
-                        aria-invalid={validName ? 'false' : 'true'}
-                        aria-describedby='uidnote'
-                        onFocus={() => setUserFocus(true)}
-                        onBlur={() => setUserFocus(false)}
+                        aria-invalid={validEmail ? 'false' : 'true'}
+                        aria-describedby='emailnote'
+                        onFocus={() => setEmailFocus(true)}
+                        onBlur={() => setEmailFocus(false)}
                     />
-                    <p id='uidnote' css={userFocus && user && !validName ? styles.instructions : styles.offscreen}>
+                    <p id='emailnote' css={emailFocus && email && !validEmail ? styles.instructions : styles.offscreen}>
                         <FontAwesomeIcon icon={faInfoCircle}/>
-                        4 to 24 characters.<br />
-                        Must begin with the letter.<br />
-                        Letters, numbers, underscores, hyphens allowed.
+                        Email is required and must be in the format user@example.com.<br />
                     </p>
+
 
                     <label htmlFor='password'>
                         Password:
@@ -156,13 +162,13 @@ const SignUpForm = () => {
                         Must match the first password input field.
                     </p>
 
-                    <button disabled={!validName || !validPassword || !validMatch ? true : false}> Sign Up</button>
+                    <Button text='Sign Up' disabled={!validEmail || !validPassword || !validMatch} />
                 </form>
 
                 <p>
                     Already registered?<br />
                     <span css={styles.line}>
-                        <Link to={navigate('/sign-in')}>Sign In</Link>
+                        <Link to={'/sign-in'}>Sign In</Link>
                     </span>
                 </p>
             </section>

@@ -1,33 +1,40 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from 'store/auth';
+import { Button } from 'components/primitives';
 
 const SignInForm = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { user } = useSelector(state => state.auth);
 
-    const userRef = useRef();
+    const emailRef = useRef();
     const errorRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errMessage, setErrMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
+        emailRef.current.focus();
     }, []);
 
     useEffect(() => {
         setErrMessage('');
-    }, [user, password]);
+    }, [email, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser('');
+        setEmail('');
         setPassword('');
-        setSuccess(true);
+        dispatch(signIn({email, password}));
     }
+
+    console.log(user);
 
     return (
         <>
@@ -42,18 +49,18 @@ const SignInForm = () => {
             ) : (
             <section>
                 <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
-                <h1>Register</h1>
+                <h1>Sign In</h1>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='username'>
-                        Username:
+                    <label htmlFor='email'>
+                        Email:
                     </label>
                     <input 
                         type='text'
-                        id='username'
-                        ref={userRef}
+                        id='email'
+                        ref={emailRef}
                         autoComplete='off'
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                         required
                     />
 
@@ -67,13 +74,13 @@ const SignInForm = () => {
                         value={password}
                         required
                     />
-
-                    <button>Sign In</button>
+                    
+                    <Button text='Sign In' />
                 </form>
                 <p>
                     Don't have an account?<br />
                     <span css={styles.line}>
-                        <Link to={navigate('/sign-up')}>Sign Up</Link>
+                        <Link to={'/sign-up'}>Sign Up</Link>
                     </span>
                 </p>
             </section>

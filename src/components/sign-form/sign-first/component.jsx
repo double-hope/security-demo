@@ -11,19 +11,15 @@ const Sign = () => {
 
   const google = (e) => {
     e.preventDefault();
-    
   }
-
   
   const github = (e) => {
     e.preventDefault();
-
   }
 
   
   const facebook = (e) => {
     e.preventDefault();
-
   }
 
   const register = (e) => {
@@ -40,7 +36,7 @@ const Sign = () => {
             <p>or</p>
             <Button text='Register' onClick={register} />
             <p>Already have an account?</p>
-            <Link to={navigate('/sign-in')}>Sign in</Link>
+            <Link to={'/sign-in'}>Sign in</Link>
         </div>
     </div>
   )
