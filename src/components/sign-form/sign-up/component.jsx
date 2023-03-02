@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link, useNavigate } from 'react-router-dom';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const SignUpForm = () => {
+
+    const navigate = useNavigate();
+
     const userRef = useRef();
     const errorRef = useRef();
 
@@ -63,7 +67,7 @@ const SignUpForm = () => {
             <section>
                 <h1>Success</h1>
                 <p>
-                    <a href='/'>Sign In</a>
+                    <Link to={navigate('/')}>Go to home</Link>
                 </p>
             </section>
         ) : (
@@ -158,7 +162,7 @@ const SignUpForm = () => {
                 <p>
                     Already registered?<br />
                     <span css={styles.line}>
-                        <a href='/'>Sign In</a>
+                        <Link to={navigate('/sign-in')}>Sign In</Link>
                     </span>
                 </p>
             </section>

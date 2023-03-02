@@ -15,6 +15,39 @@ class Auth {
         })
     }
 
+    signUp(path, payload){
+        return this._http.load(this._getUrl(path), {
+            method: HttpMethodEnum.POST,
+            payload: JSON.stringify(payload),
+            contentType: 'application/json',
+        })
+    }
+
+    verifyRegistration(path, payload){
+        return this._http.load(this._getUrl(path), {
+            method: HttpMethodEnum.POST,
+            payload: JSON.stringify(payload),
+            contentType: 'application/json',
+        })
+    }
+
+    resendEmailVerificationToken(path, payload){
+        return this._http.load(this._getUrl(path), {
+            method: HttpMethodEnum.POST,
+            payload: JSON.stringify(payload),
+            contentType: 'application/json',
+        })
+    }
+
+    refreshToken(path, payload){
+        return this._http.load(this._getUrl(path), {
+            method: HttpMethodEnum.POST,
+            payload: JSON.stringify(payload),
+            contentType: 'application/json',
+        })
+    }
+
+
     _getUrl(path = '') {
         return `${this._baseURL}${this._basePath}${path}`;
     }

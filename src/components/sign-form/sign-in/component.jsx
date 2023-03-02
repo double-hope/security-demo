@@ -1,7 +1,11 @@
-import { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignInForm = () => {
+
+    const navigate = useNavigate();
+
     const userRef = useRef();
     const errorRef = useRef();
 
@@ -32,7 +36,7 @@ const SignInForm = () => {
                 <h1>You are logged in!</h1>
                 <br />
                 <p>
-                    <a href='/'>Go to home</a>
+                    <Link to={navigate('/')}>Go to home</Link>
                 </p>
             </section>
             ) : (
@@ -69,7 +73,7 @@ const SignInForm = () => {
                 <p>
                     Don't have an account?<br />
                     <span css={styles.line}>
-                        <a href='/'>Sign Up</a>
+                        <Link to={navigate('/sign-up')}>Sign Up</Link>
                     </span>
                 </p>
             </section>
