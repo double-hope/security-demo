@@ -1,15 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signIn } from 'store/auth';
 import { Button, Input } from 'components/primitives';
+import { useRefreshToken } from 'hooks/useRefreshToken';
 
 const SignInForm = () => {
 
+    const refresh = useRefreshToken();
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.auth);
 
     const emailRef = useRef();
     const errorRef = useRef();
@@ -21,6 +23,7 @@ const SignInForm = () => {
 
     useEffect(() => {
         emailRef.current.focus();
+        dispatch(signIn({email: 'test@example.com', password: '123qwQW!!!!!'}));
     }, []);
 
     useEffect(() => {
@@ -33,8 +36,6 @@ const SignInForm = () => {
         setPassword('');
         dispatch(signIn({email, password}));
     }
-
-    console.log(user);
 
     return (
         <>
