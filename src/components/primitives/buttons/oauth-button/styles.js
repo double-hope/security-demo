@@ -14,11 +14,6 @@ export const oauthButton = () => css`
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.4);
     border-radius: 30px;
     cursor: pointer;
-    transition: all .3s;
-
-    &:hover {
-        transform: scale(1.01);
-    }
 `;
 
 export const oauthButtonText = () => css`
