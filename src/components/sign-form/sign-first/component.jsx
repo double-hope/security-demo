@@ -1,6 +1,6 @@
 import { faGithub, faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import * as styles from './styles';
-import { Button, OAuthButton, Modal, ResetButton, Footer } from 'components/primitives';
+import { Button, OAuthButton, Modal, ResetButton, Footer, OAuthLink } from 'components/primitives';
 import { useDispatch } from 'react-redux';
 import { authorize } from 'store/oauth';
 import { useState } from 'react';
@@ -47,11 +47,6 @@ const Sign = () => {
     Object.values(modals).map(value => value.state(e.target.id === value.id));
   }
 
-  const google = (e) => {
-    e.preventDefault();
-    dispatch(authorize({service: '/google', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
-  }
-  
   const github = (e) => {
     e.preventDefault();
     dispatch(authorize({service: '/github', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
@@ -67,7 +62,7 @@ const Sign = () => {
       <div css={styles.layout}>
         <div css={styles.aside} />
         <div css={styles.signForm}>
-            <OAuthButton icon={faGoogle} text='Login with Google' additionStyles={styles.google} onClick={google} />
+            <OAuthLink icon={faGoogle} text='Login with Google' additionStyles={styles.google} to={'http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:8080/regsiter-step2'} />
             <OAuthButton icon={faGithub} text='Login with Github' onClick={github} />
             <OAuthButton icon={faFacebook} text='Login with Facebook' additionStyles={styles.facebook} onClick={facebook} />
             <p>or</p>
