@@ -26,8 +26,10 @@ const AppRouter = () => {
             <Route element={<RequireAuthPage allowedRoles={[roles.USER]} />}>
               <Route path='' element={<HomePage />} />
             </Route>
+
+            <Route path='*' element={<MissingPage />} />
           </Route>
-          
+
           <Route path='*' element={<MissingPage />} />
         </Route>
     </Routes>

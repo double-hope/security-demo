@@ -24,7 +24,6 @@ const SignInForm = () => {
 
     useEffect(() => {
         emailRef.current.focus();
-        dispatch(signIn({email: 'test@example.com', password: '123qwQW!!!!!'}));
     }, []);
 
     useEffect(() => {
@@ -42,8 +41,7 @@ const SignInForm = () => {
         if(status === DataStatusEnum.SUCCESS) { 
             const jwt = jwtDecode(tokens?.accessToken);
             setAuth({user: email, password, accessToken: tokens?.accessToken, roles: jwt?.roles});
-            localStorage.setItem('session', JSON.stringify({user: {email: 'test@example.com', login: btoa('123qwQW!!!!!'), expired: false}}));
-            // localStorage.setItem('session', JSON.stringify({user: {email, login: btoa(password), expired: false}}));
+            localStorage.setItem('session', JSON.stringify({user: {email, login: btoa(password), expired: false}}));
             navigate('/');
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
