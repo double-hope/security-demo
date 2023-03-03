@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
-import { refreshToken } from "store/auth";
-
-const { useAuth } = require("./useAuth");
+import jwtDecode from 'jwt-decode';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshToken } from 'store/auth';
+import { useAuth } from './useAuth';
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
@@ -11,9 +11,12 @@ const useRefreshToken = () => {
     const refresh = async () => {
         await dispatch(refreshToken({refreshToken: tokens?.refreshToken}));
 
+        const jwt = jwtDecode(tokens?.accessToken);
+
         setAuth(prev => {
             return {
                 ...prev,
+                roles: jwt?.roles,
                 accessToken: tokens?.accessToken
             }
         });
