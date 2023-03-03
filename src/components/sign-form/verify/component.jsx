@@ -37,7 +37,7 @@ const Verify = ({toggleModals, modals}) => {
             </form>
             <p css={styles.link}>
                 <span css={styles.line}>
-                    <ResetButton text='Sign In' onClick={toggleModals} id={modals.SIGN_IN.id} />
+                    <ResetButton text='Sign In' onClick={toggleModals} id={modals.CREDENTIALS.id} />
                 </span>
             </p>
 

@@ -9,6 +9,7 @@ import { SignUpForm } from '../sign-up';
 import { ButtonSizeEnum } from 'common/enums';
 import { ResetPassword, TechnicalSupport } from '../forgot-password';
 import { Verify } from '../verify';
+import { EnterCredentials } from '../enter-credentials';
 
 const Sign = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Sign = () => {
   const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
   const [technicalSupportVisible, setTechnicalSupportVisible] = useState(false);
   const [verifyVisible, setVerifyVisible] = useState(false);
+  const [credentialsVisible, setCredentialsVisible] = useState(false);
 
   const modals = {
     SIGN_IN: {
@@ -39,6 +41,10 @@ const Sign = () => {
     VERIFY: {
       id: 'verify',
       state: setVerifyVisible
+    },
+    CREDENTIALS: {
+      id: 'credentials',
+      state: setCredentialsVisible
     }
   }
 
@@ -92,6 +98,10 @@ const Sign = () => {
 
       <Modal visible={verifyVisible} setVisible={setVerifyVisible}>
         <Verify toggleModals={toggleModals} modals={modals} />
+      </Modal>
+
+      <Modal visible={credentialsVisible} setVisible={setCredentialsVisible}>
+        <EnterCredentials toggleModals={toggleModals} modals={modals} />
       </Modal>
 
     </div>
