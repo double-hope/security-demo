@@ -15,6 +15,7 @@ const ResetPassword = ({toggleModals, modals}) => {
     return (
         <section css={styles.wrapper}>
             <h1>Help with your password</h1>
+            <p>write you e-mail and we will send instruction of changing your password</p>
             <form onSubmit={handleSubmit} css={styles.signForm}>
                 <div css={styles.inputContainer}>
                      <Input 

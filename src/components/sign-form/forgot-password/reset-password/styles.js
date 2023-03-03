@@ -6,6 +6,17 @@ export const wrapper = () => css`
     align-items: center;
     flex-direction: column;
     padding: 40px;
+
+    & > h1 {
+        margin-bottom: 10px;
+    }
+
+    & p:first-of-type {
+        max-width: 300px;
+        text-align: center;
+        font-weight: 900;
+        font-size: 12px;
+    }
 `;
 
 export const signForm = () => css`
