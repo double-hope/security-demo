@@ -8,6 +8,10 @@ import UnauthorizedPage from 'pages/unauthorized/Unauthorized';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+const roles = {
+  USER: 'USER',
+}
+
 const AppRouter = () => {
   return (
     <Routes>
@@ -17,11 +21,13 @@ const AppRouter = () => {
           <Route path='sign-in' element={<SignInForm />} />
           <Route path='verify' element={<Verify />} />
           <Route path='unauthorized' element={<UnauthorizedPage />} />
+
           <Route element={<PersistLoginPage />}>
-            <Route element={<RequireAuthPage allow={true} />}>
+            <Route element={<RequireAuthPage allowedRoles={[roles.USER]} />}>
               <Route path='' element={<HomePage />} />
             </Route>
           </Route>
+          
           <Route path='*' element={<MissingPage />} />
         </Route>
     </Routes>
