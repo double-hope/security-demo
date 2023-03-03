@@ -9,7 +9,7 @@ import './styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <AppProvider>
         <BrowserRouter>
@@ -17,5 +17,5 @@ root.render(
         </BrowserRouter>
       </AppProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

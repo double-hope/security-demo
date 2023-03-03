@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Input, ResetButton } from 'components/primitives';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/auth';
@@ -13,7 +12,6 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
 
 const SignUpForm = ({toggleModals, modals}) => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { message, status } = useSelector(state => state.auth);
 
@@ -76,7 +74,14 @@ const SignUpForm = ({toggleModals, modals}) => {
     }, [message]);
 
     useEffect(() => {
-        if(status === DataStatusEnum.SUCCESS) navigate('/verify');
+        const verify = {
+            preventDefault: () => {},
+            target: {
+                id: modals.VERIFY.id,
+            }
+        }
+        
+        if(status === DataStatusEnum.SUCCESS) toggleModals(verify);
         if(status !== DataStatusEnum.PENDING) setDisabled(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

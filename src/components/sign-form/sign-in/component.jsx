@@ -38,7 +38,7 @@ const SignInForm = ({toggleModals, modals}) => {
     }
 
     useEffect(() => {
-        if(status === DataStatusEnum.SUCCESS) { 
+        if(status === DataStatusEnum.SUCCESS && tokens.length) { 
             const jwt = jwtDecode(tokens?.accessToken);
             setAuth({user: email, password, accessToken: tokens?.accessToken, roles: jwt?.roles});
             localStorage.setItem('session', JSON.stringify({user: {email, login: btoa(password), expired: false}}));
