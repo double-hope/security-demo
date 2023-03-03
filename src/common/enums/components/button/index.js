@@ -1,3 +1,3 @@
-export { ButtonColorEnum } from './buttonColor';
+export { ButtonColorEnum, ValueToColor } from './buttonColor';
 export { ButtonShapeEnum } from './buttonShape';
-export { ButtonSizeEnum } from './buttonSize';
+export { ButtonSizeEnum, SizeToRadius } from './buttonSize';

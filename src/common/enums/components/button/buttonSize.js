@@ -5,4 +5,11 @@ const ButtonSizeEnum = {
     EXTRA_SMALL: 'extra small',
 }
 
-export { ButtonSizeEnum };
+const SizeToRadius = {
+    [ButtonSizeEnum.LARGE]: '30px',
+    [ButtonSizeEnum.DEFAULT]: '30px',
+    [ButtonSizeEnum.SMALL]: '20px',
+    [ButtonSizeEnum.EXTRA_SMALL]: '20px',
+}
+
+export { ButtonSizeEnum, SizeToRadius };

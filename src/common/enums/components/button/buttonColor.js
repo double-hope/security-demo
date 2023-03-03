@@ -4,4 +4,10 @@ const ButtonColorEnum = {
     DARK: 'dark',
 }
 
-export { ButtonColorEnum };
+const ValueToColor = {
+    [ButtonColorEnum.PRIMARY]: '#3361FF',
+    [ButtonColorEnum.LIGHT]: '#FFFFFF',
+    [ButtonColorEnum.DARK]: '#202B40',
+}
+
+export { ButtonColorEnum, ValueToColor };
