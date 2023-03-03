@@ -21,12 +21,23 @@ export const modalContent = () => css`
   justify-content: center;
   align-items: center;
   position: relative;
-  border-radius: 5px;
-  width: fit-content;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
   padding: 50px;
   background: #F7F8FA;
   box-sizing: border-box;
-  max-width: 100vw;
-  min-width: 600px;
+`;
+
+export const close = () => css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 `;
