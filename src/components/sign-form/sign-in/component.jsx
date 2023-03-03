@@ -6,6 +6,7 @@ import { signIn } from 'store/auth';
 import { Button, Input } from 'components/primitives';
 import { useAuth } from 'hooks/useAuth';
 import { DataStatusEnum } from 'common/enums';
+import jwtDecode from 'jwt-decode';
 
 const SignInForm = () => {
 
@@ -20,7 +21,6 @@ const SignInForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errMessage, setErrMessage] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         emailRef.current.focus();
@@ -39,60 +39,53 @@ const SignInForm = () => {
     }
 
     useEffect(() => {
-        if(status === DataStatusEnum.SUCCESS) setAuth({accessToken: tokens?.accessToken});
+        if(status === DataStatusEnum.SUCCESS) { 
+            const jwt = jwtDecode(tokens?.accessToken);
+            setAuth({user: email, password, accessToken: tokens?.accessToken, roles: jwt?.roles});
+            localStorage.setItem('session', JSON.stringify({user: {email: 'test@example.com', login: btoa('123qwQW!!!!!'), expired: false}}));
+            // localStorage.setItem('session', JSON.stringify({user: {email, login: btoa(password), expired: false}}));
+            navigate('/');
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
     return (
-        <>
-            {success ? (
-                <section>
-                <h1>You are logged in!</h1>
-                <br />
-                <p>
-                    <Link to={navigate('/')}>Go to home</Link>
-                </p>
-            </section>
-            ) : (
-            <section css={styles.wrapper}>
-                <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
-                <h1>Sign In</h1>
-                <form onSubmit={handleSubmit} css={styles.signForm}>
+        <section css={styles.wrapper}>
+            <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
+            <h1>Sign In</h1>
+            <form onSubmit={handleSubmit} css={styles.signForm}>
 
-                    <Input 
-                        type='text' 
-                        id='email' 
-                        inputRef={emailRef}
-                        onChange={(e) => setEmail(e.target.value)}
-                        value={email}
-                        autoComplete='off'
-                        required
+                <Input 
+                    type='text' 
+                    id='email' 
+                    inputRef={emailRef}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    autoComplete='off'
+                    required
 
-                        label='Email:'
-                    />
+                    label='Email:'
+                />
 
-                    <Input 
-                        type='password' 
-                        id='password' 
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        required
+                <Input 
+                    type='password' 
+                    id='password' 
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
 
-                        label='Password:'
-                    />
-                    
-                    <Button text='Sign In' />
-                </form>
-                <p css={styles.link}>
-                    Don't have an account?<br />
-                    <span css={styles.line}>
-                        <Link to={'/sign-up'}>Sign Up</Link>
-                    </span>
-                </p>
-            </section>
-            )
-            }
-        </>
+                    label='Password:'
+                />
+                
+                <Button text='Sign In' />
+            </form>
+            <p css={styles.link}>
+                Don't have an account?<br />
+                <span css={styles.line}>
+                    <Link to={'/sign-up'}>Sign Up</Link>
+                </span>
+            </p>
+        </section>
         
     )
 }
