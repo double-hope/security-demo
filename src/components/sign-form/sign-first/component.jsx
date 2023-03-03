@@ -7,17 +7,38 @@ import { useState } from 'react';
 import { SignInForm } from '../sign-in';
 import { SignUpForm } from '../sign-up';
 import { ButtonSizeEnum } from 'common/enums';
+import { ResetPassword, TechnicalSupport } from '../forgot-password';
 
 const Sign = () => {
   const dispatch = useDispatch();
 
   const [signInVisible, setSignInVisible] = useState(false);
   const [signUpVisible, setSignUpVisible] = useState(false);
+  const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
+  const [technicalSupportVisible, setTechnicalSupportVisible] = useState(false);
+
+  const modals = {
+    SIGN_IN: {
+      id: 'sign-in',
+      state: setSignInVisible
+    },
+    SIGN_UP: {
+      id: 'sign-up',
+      state: setSignUpVisible
+    },
+    RESET: {
+      id: 'reset',
+      state: setResetPasswordVisible
+    },
+    SUPPORT: {
+      id: 'support',
+      state: setTechnicalSupportVisible
+    },
+  }
 
   const toggleModals = (e) => {
     e.preventDefault();
-    setSignInVisible(!signInVisible);
-    setSignUpVisible(!signUpVisible);
+    Object.values(modals).map(value => value.state(e.target.id === value.id));
   }
 
   const google = (e) => {
@@ -52,14 +73,21 @@ const Sign = () => {
         </div>
       </div>
         
+      <Modal visible={signInVisible} setVisible={setSignInVisible}>
+        <SignInForm toggleModals={toggleModals} modals={modals} />
+      </Modal>
 
-        <Modal visible={signInVisible} setVisible={setSignInVisible}>
-          <SignInForm toggleModals={toggleModals} />
-        </Modal>
+      <Modal visible={signUpVisible} setVisible={setSignUpVisible}>
+        <SignUpForm toggleModals={toggleModals} modals={modals} />
+      </Modal>
 
-        <Modal visible={signUpVisible} setVisible={setSignUpVisible}>
-          <SignUpForm toggleModals={toggleModals} />
-        </Modal>
+      <Modal visible={resetPasswordVisible} setVisible={setResetPasswordVisible}>
+        <ResetPassword toggleModals={toggleModals} modals={modals} />
+      </Modal>
+
+      <Modal visible={technicalSupportVisible} setVisible={setTechnicalSupportVisible}>
+        <TechnicalSupport toggleModals={toggleModals} modals={modals} />
+      </Modal>
 
     </div>
   )

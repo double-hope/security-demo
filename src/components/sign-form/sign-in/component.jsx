@@ -8,7 +8,7 @@ import { useAuth } from 'hooks/useAuth';
 import { DataStatusEnum, ResetButtonTypeEnum } from 'common/enums';
 import jwtDecode from 'jwt-decode';
 
-const SignInForm = ({toggleModals}) => {
+const SignInForm = ({toggleModals, modals}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -84,10 +84,10 @@ const SignInForm = ({toggleModals}) => {
             <p css={styles.link}>
                 Don't have an account?<br />
                 <span css={styles.line}>
-                    <ResetButton text='Sign Up' onClick={toggleModals} />
+                    <ResetButton text='Sign Up' onClick={toggleModals} id={modals.SIGN_UP.id} />
                 </span>
                 
-                <ResetButton text='Forgot password?' onClick={(e) => e.preventDefault()} type={ResetButtonTypeEnum.BOLD} />
+                <ResetButton text='Forgot password?' onClick={toggleModals} type={ResetButtonTypeEnum.BOLD} id={modals.RESET.id} />
             </p>
 
         </section>

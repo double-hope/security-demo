@@ -11,7 +11,7 @@ import { DataStatusEnum } from 'common/enums';
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const SignUpForm = ({toggleModals}) => {
+const SignUpForm = ({toggleModals, modals}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -178,14 +178,13 @@ const SignUpForm = ({toggleModals}) => {
                     </p>
                 </div>
                 
-
                 <Button text='Sign Up' disabled={!validEmail || !validPassword || !validMatch || !disabled} />
             </form>
 
             <p css={styles.link}>
                 Already have an account?<br />
                 <span css={styles.line}>
-                    <ResetButton text='Sign In' onClick={toggleModals} />
+                    <ResetButton text='Sign In' onClick={toggleModals} id={modals.SIGN_IN.id} />
                 </span>
             </p>
         </section>
