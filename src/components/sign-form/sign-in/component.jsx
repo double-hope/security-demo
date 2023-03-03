@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'store/auth';
 import { Button, Input, ResetButton } from 'components/primitives';
 import { useAuth } from 'hooks/useAuth';
-import { DataStatusEnum } from 'common/enums';
+import { DataStatusEnum, ResetButtonTypeEnum } from 'common/enums';
 import jwtDecode from 'jwt-decode';
 
 const SignInForm = ({toggleModals}) => {
@@ -52,28 +52,32 @@ const SignInForm = ({toggleModals}) => {
             <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit} css={styles.signForm}>
+                <div css={styles.inputContainer}>
+                     <Input 
+                        type='text' 
+                        id='email' 
+                        inputRef={emailRef}
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        autoComplete='off'
+                        required
 
-                <Input 
-                    type='text' 
-                    id='email' 
-                    inputRef={emailRef}
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    autoComplete='off'
-                    required
+                        label='Email:'
+                    />
+                </div>
+               
+                <div css={styles.inputContainer}>
+                    <Input 
+                        type='password' 
+                        id='password' 
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        required
 
-                    label='Email:'
-                />
-
-                <Input 
-                    type='password' 
-                    id='password' 
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    required
-
-                    label='Password:'
-                />
+                        label='Password:'
+                    />
+                </div>
+                
                 
                 <Button text='Sign In' />
             </form>
@@ -82,7 +86,10 @@ const SignInForm = ({toggleModals}) => {
                 <span css={styles.line}>
                     <ResetButton text='Sign Up' onClick={toggleModals} />
                 </span>
+                
+                <ResetButton text='Forgot password?' onClick={(e) => e.preventDefault()} type={ResetButtonTypeEnum.BOLD} />
             </p>
+
         </section>
         
     )

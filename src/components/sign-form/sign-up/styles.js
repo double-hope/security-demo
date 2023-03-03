@@ -20,11 +20,17 @@ export const signForm = () => css`
 
 export const valid = () => css`
     display: inline;
+    position: absolute;
+    top: 5px;
+    right: 6px;
     color: green;
 `;
 
 export const invalid = () => css`
     display: inline;
+    position: absolute;
+    top: 5px;
+    right: 6px;
     color: red;
 `;
 
@@ -33,12 +39,12 @@ export const hide = () => css`
 `;
 
 export const instructions = () => css`
+    position: absolute;
+    bottom: 0;
     width: 100%;
-    max-width: 250px;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 10px;
+    color: red;
+    font-size: 10px;
+    font-weight: 800;
 `;
 
 export const offscreen = () => css`
@@ -62,4 +68,12 @@ export const link = () => css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-weight: 900;
 `;
+
+export const inputContainer = () => css`
+    position: relative;
+    padding-bottom: 25px;
+    width: 100%;
+    max-width: 300px;
+`; 

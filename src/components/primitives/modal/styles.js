@@ -17,6 +17,9 @@ export const modalWrapper = () => css`
 `;
 
 export const modalContent = () => css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   border-radius: 5px;
   width: fit-content;
@@ -25,4 +28,5 @@ export const modalContent = () => css`
   background: #F7F8FA;
   box-sizing: border-box;
   max-width: 100vw;
+  min-width: 600px;
 `;

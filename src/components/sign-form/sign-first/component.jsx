@@ -6,6 +6,7 @@ import { authorize } from 'store/oauth';
 import { useState } from 'react';
 import { SignInForm } from '../sign-in';
 import { SignUpForm } from '../sign-up';
+import { ButtonSizeEnum } from 'common/enums';
 
 const Sign = () => {
   const dispatch = useDispatch();
@@ -36,23 +37,29 @@ const Sign = () => {
   
   return (
     <div css={styles.wrapper}>
+      <div css={styles.layout}>
+        <div css={styles.aside} />
         <div css={styles.signForm}>
             <OAuthButton icon={faGoogle} text='Login with Google' additionStyles={styles.google} onClick={google} />
             <OAuthButton icon={faGithub} text='Login with Github' onClick={github} />
             <OAuthButton icon={faFacebook} text='Login with Facebook' additionStyles={styles.facebook} onClick={facebook} />
             <p>or</p>
-            <Button text='Register' onClick={() => setSignUpVisible(!signUpVisible)} />
+            <Button text='Register' onClick={() => setSignUpVisible(!signUpVisible)} size={ButtonSizeEnum.LARGE} />
+            <p css={styles.small}>By signing up, ypu agree to the Terms or Service anf Privacy Policy, including Cookie Use.</p>
             <p>Already have an account?</p>
-            <ResetButton text={'Sign In'} onClick={() => setSignInVisible(!signInVisible)} />
-
-            <Modal visible={signInVisible} setVisible={setSignInVisible}>
-              <SignInForm toggleModals={toggleModals} />
-            </Modal>
-
-            <Modal visible={signUpVisible} setVisible={setSignUpVisible}>
-              <SignUpForm toggleModals={toggleModals} />
-            </Modal>
+            <ResetButton text={'Login'} onClick={() => setSignInVisible(!signInVisible)} />
         </div>
+      </div>
+        
+
+        <Modal visible={signInVisible} setVisible={setSignInVisible}>
+          <SignInForm toggleModals={toggleModals} />
+        </Modal>
+
+        <Modal visible={signUpVisible} setVisible={setSignUpVisible}>
+          <SignUpForm toggleModals={toggleModals} />
+        </Modal>
+
     </div>
   )
 }

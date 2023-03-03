@@ -35,4 +35,12 @@ export const link = () => css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-weight: 900;
 `;
+
+export const inputContainer = () => css`
+    position: relative;
+    padding-bottom: 25px;
+    width: 100%;
+    max-width: 300px;
+`; 
