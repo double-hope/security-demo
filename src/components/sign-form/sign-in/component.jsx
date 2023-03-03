@@ -1,17 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'store/auth';
 import { Button, Input } from 'components/primitives';
-import { useRefreshToken } from 'hooks/useRefreshToken';
+import { useAuth } from 'hooks/useAuth';
+import { DataStatusEnum } from 'common/enums';
 
 const SignInForm = () => {
 
-    const refresh = useRefreshToken();
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { setAuth } = useAuth();
+    const { tokens, status } = useSelector(state => state.auth);
 
     const emailRef = useRef();
     const errorRef = useRef();
@@ -36,6 +37,11 @@ const SignInForm = () => {
         setPassword('');
         dispatch(signIn({email, password}));
     }
+
+    useEffect(() => {
+        if(status === DataStatusEnum.SUCCESS) setAuth({accessToken: tokens?.accessToken});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status]);
 
     return (
         <>
