@@ -13,12 +13,6 @@ export const button = () => css`
     line-height: 20px;
     cursor: pointer;
 
-    &:disabled {
-        background-color: #b0b3b8;
-        color: #575859;
-        cursor: not-allowed;
-    }
-
     &[button-color=${ButtonColorEnum.PRIMARY}] {
         background-color: #3361FF;
         border: 2px solid #3361FF;
@@ -81,4 +75,14 @@ export const button = () => css`
         border-radius: 5px;
     }
 
+    &:disabled {
+        background-color: #b0b3b8;
+        border: 2px solid #b0b3b8;
+        color: #575859;
+        cursor: not-allowed;
+
+        & svg {
+            color: #78797a;
+        }
+    }
 `;
