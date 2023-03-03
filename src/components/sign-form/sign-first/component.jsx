@@ -1,6 +1,6 @@
 import { faGithub, faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import * as styles from './styles';
-import { Button, OAuthButton, Modal, ResetButton } from 'components/primitives';
+import { Button, OAuthButton, Modal, ResetButton, Footer } from 'components/primitives';
 import { useDispatch } from 'react-redux';
 import { authorize } from 'store/oauth';
 import { useState } from 'react';
@@ -48,6 +48,7 @@ const Sign = () => {
             <p css={styles.small}>By signing up, ypu agree to the Terms or Service anf Privacy Policy, including Cookie Use.</p>
             <p>Already have an account?</p>
             <ResetButton text={'Login'} onClick={() => setSignInVisible(!signInVisible)} />
+            <Footer>terms...</Footer>
         </div>
       </div>
         
