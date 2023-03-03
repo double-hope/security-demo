@@ -25,33 +25,20 @@ export const signForm = () => css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #a9abba;
+    background: linear-gradient(45deg, #00c9e5, #00c0ed, #00b6f3, #00abf7, #009ef8, #55a0f8, #78a2f7, #92a5f5, #b3baf7, #d0d0fa, #e9e7fc, #ffffff);
+    background-size: 400%;
     font-weight: 900;
     width: 100%;
     height: 100%;
+    animation: bg-animation 10s infinite alternate;
 
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(29deg, transparent 50%, #755efe);
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-image: linear-gradient(15deg, #a499ff 0%, transparent 50%);
-    }
-
-    & * {
-        z-index: 1;
+    @keyframes bg-animation {
+        0% {
+            background-position: left;
+        }
+        100% {
+            background-position: right;
+        }
     }
 `;
 
