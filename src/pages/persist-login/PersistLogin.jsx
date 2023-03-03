@@ -1,44 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useRefreshToken, useAuth } from 'hooks';
+import { useAuth, useLocalStorage } from 'hooks';
+import { useLogin } from 'hooks/useLogin';
 
 const PersistLoginPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const refresh = useRefreshToken();
-  const { auth, persist } = useAuth();
+  const login = useLogin();
+  const { auth } = useAuth();
+  const [ session ] = useLocalStorage('session', '');
 
   useEffect(() => {
       let isMounted = true;
 
-      const verifyRefreshToken = async () => {
-          try {
-              await refresh();
-          }
-          catch (err) {
-              console.error(err);
-          }
-          finally {
-              isMounted && setIsLoading(false);
-          }
+      const relogin = async () => {
+        try {
+          await login();
+        }
+        catch (err) {
+          console.error(err);
+        }
+        finally {
+            isMounted && setIsLoading(false);
+        }
       }
 
-      !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
+      !auth?.accessToken && !session?.user?.expired ? relogin() : setIsLoading(false);
 
       return () => isMounted = false;
-  }, [])
 
-  // useEffect(() => {
-  //     console.log(`isLoading: ${isLoading}`)
-  //     console.log(`aT: ${JSON.stringify(auth?.accessToken)}`)
-  // }, [isLoading])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
       <>
-          {!persist
-              ? <Outlet />
-              : isLoading
-                  ? <p>Loading...</p>
-                  : <Outlet />
+          {isLoading
+            ? <p>Loading...</p>
+            : <Outlet />
           }
       </>
   );
