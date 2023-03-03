@@ -1,4 +1,4 @@
-import { Layout, SignInForm, SignUpForm, Verify } from 'components';
+import { Layout, Verify } from 'components';
 import HomePage from 'pages/home/Home';
 import MissingPage from 'pages/missing/Missing';
 import PersistLoginPage from 'pages/persist-login/PersistLogin';
@@ -17,8 +17,6 @@ const AppRouter = () => {
     <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='login' element={<SignPage />} />
-          <Route path='sign-up' element={<SignUpForm />} />
-          <Route path='sign-in' element={<SignInForm />} />
           <Route path='verify' element={<Verify />} />
           <Route path='unauthorized' element={<UnauthorizedPage />} />
 
