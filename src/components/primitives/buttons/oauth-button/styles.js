@@ -8,11 +8,11 @@ export const oauthButton = () => css`
     width: 100%;
     max-width: 250px;
     margin: 10px 0;
-    padding: 10px;
+    padding: 15px 25px;
     background-color: white;
     border: none;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.4);
-    border-radius: 20px;
+    border-radius: 30px;
     cursor: pointer;
     transition: all .3s;
 
