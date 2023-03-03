@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input } from 'components/primitives';
+import { useNavigate } from 'react-router-dom';
+import { Button, Input, ResetButton } from 'components/primitives';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/auth';
 import { DataStatusEnum } from 'common/enums';
@@ -11,7 +11,7 @@ import { DataStatusEnum } from 'common/enums';
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const SignUpForm = () => {
+const SignUpForm = ({toggleModals}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -183,7 +183,7 @@ const SignUpForm = () => {
             <p css={styles.link}>
                 Already have an account?<br />
                 <span css={styles.line}>
-                    <Link to={'/sign-in'}>Sign In</Link>
+                    <ResetButton text='Sign In' onClick={toggleModals} />
                 </span>
             </p>
         </section>

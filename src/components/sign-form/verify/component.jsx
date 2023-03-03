@@ -21,7 +21,7 @@ const Verify = () => {
     useEffect(() => {
         notify();
         setTimeout(() => {
-            navigate('/sign-in');
+            navigate('/');
         }, 2000);
     }, [navigate]);
 

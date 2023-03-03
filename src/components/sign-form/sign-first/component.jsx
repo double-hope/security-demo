@@ -1,14 +1,23 @@
 import { faGithub, faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import * as styles from './styles';
-import { Button, OAuthButton } from 'components/primitives';
+import { Button, OAuthButton, Modal, ResetButton } from 'components/primitives';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
 import { authorize } from 'store/oauth';
+import { useState } from 'react';
+import { SignInForm } from '../sign-in';
+import { SignUpForm } from '../sign-up';
 
 const Sign = () => {
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const [signInVisible, setSignInVisible] = useState(false);
+  const [signUpVisible, setSignUpVisible] = useState(false);
+
+  const toggleModals = (e) => {
+    e.preventDefault();
+    setSignInVisible(!signInVisible);
+    setSignUpVisible(!signUpVisible);
+  }
 
   const google = (e) => {
     e.preventDefault();
@@ -24,11 +33,6 @@ const Sign = () => {
     e.preventDefault();
     dispatch(authorize({service: '/facebook', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
   }
-
-  const register = (e) => {
-    e.preventDefault();
-    navigate('/sign-up');
-  }
   
   return (
     <div css={styles.wrapper}>
@@ -37,9 +41,17 @@ const Sign = () => {
             <OAuthButton icon={faGithub} text='Login with Github' onClick={github} />
             <OAuthButton icon={faFacebook} text='Login with Facebook' additionStyles={styles.facebook} onClick={facebook} />
             <p>or</p>
-            <Button text='Register' onClick={register} />
+            <Button text='Register' onClick={() => setSignUpVisible(!signUpVisible)} />
             <p>Already have an account?</p>
-            <Link to={'/sign-in'}>Sign in</Link>
+            <ResetButton text={'Sign In'} onClick={() => setSignInVisible(!signInVisible)} />
+
+            <Modal visible={signInVisible} setVisible={setSignInVisible}>
+              <SignInForm toggleModals={toggleModals} />
+            </Modal>
+
+            <Modal visible={signUpVisible} setVisible={setSignUpVisible}>
+              <SignUpForm toggleModals={toggleModals} />
+            </Modal>
         </div>
     </div>
   )

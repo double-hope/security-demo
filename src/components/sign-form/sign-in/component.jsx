@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'store/auth';
-import { Button, Input } from 'components/primitives';
+import { Button, Input, ResetButton } from 'components/primitives';
 import { useAuth } from 'hooks/useAuth';
 import { DataStatusEnum } from 'common/enums';
 import jwtDecode from 'jwt-decode';
 
-const SignInForm = () => {
+const SignInForm = ({toggleModals}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const SignInForm = () => {
             <p css={styles.link}>
                 Don't have an account?<br />
                 <span css={styles.line}>
-                    <Link to={'/sign-up'}>Sign Up</Link>
+                    <ResetButton text='Sign Up' onClick={toggleModals} />
                 </span>
             </p>
         </section>
