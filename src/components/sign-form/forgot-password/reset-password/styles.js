@@ -10,13 +10,6 @@ export const wrapper = () => css`
     & > h1 {
         margin-bottom: 10px;
     }
-
-    & p:first-of-type {
-        max-width: 300px;
-        text-align: center;
-        font-weight: 900;
-        font-size: 12px;
-    }
 `;
 
 export const signForm = () => css`
@@ -43,7 +36,15 @@ export const link = () => css`
 
 export const inputContainer = () => css`
     position: relative;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     width: 100%;
     max-width: 300px;
 `; 
+
+export const smallInfo = () => css`
+    font-size : 10px;
+    max-width: 300px;
+    font-weight: 400;
+    text-align: center;
+    padding: 0 5px;
+`;

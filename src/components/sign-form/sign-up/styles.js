@@ -15,7 +15,6 @@ export const signForm = () => css`
     align-items: center;
     width: 100%;
     margin: 20px;
-    gap: 10px;
 `;
 
 export const valid = () => css`
@@ -73,7 +72,23 @@ export const link = () => css`
 
 export const inputContainer = () => css`
     position: relative;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     width: 100%;
     max-width: 300px;
 `; 
+
+export const credentials = () => css`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 300px;
+`;
+
+export const smallInfo = () => css`
+    font-size : 10px;
+    max-width: 300px;
+    font-weight: 400;
+    text-align: center;
+    padding: 0 5px;
+`;

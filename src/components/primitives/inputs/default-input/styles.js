@@ -3,8 +3,9 @@ import { css } from '@emotion/react';
 export const inputWrapper = () => css`
     box-shadow: 0px 2px 5px rgba(38, 51, 77, 0.03);
     padding: 5px 6px;
-    border: 2px solid #F5F6F7;
+    border: 1px solid #bfbfbf;
     border-radius: 5px;
+    box-shadow: 0 0 5px #85858560;
     background: #FFFFFF;
     display: flex;
     justify-content: space-between;

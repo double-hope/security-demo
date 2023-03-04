@@ -2,22 +2,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as styles from './styles';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Input, ResetButton } from 'components/primitives';
+import { Button, Input, OAuthButton, OAuthLink, ResetButton } from 'components/primitives';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/auth';
-import { DataStatusEnum } from 'common/enums';
+import { ButtonShapeEnum, DataStatusEnum } from 'common/enums';
+import { faFacebook, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { authorize } from 'store/oauth';
 
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const SignUpForm = ({toggleModals, modals}) => {
+const SignUpForm = ({toggleForms, forms}) => {
 
     const dispatch = useDispatch();
     const { message, status } = useSelector(state => state.auth);
 
-    const emailRef = useRef();
+    const firstNameRef = useRef();
     const errorRef = useRef();
     
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+
     const [email, setEmail] = useState('');
     const [validEmail, setValidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
@@ -26,16 +31,12 @@ const SignUpForm = ({toggleModals, modals}) => {
     const [validPassword, setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
 
-    const [matchPassword, setMatchPassword] = useState('');
-    const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
-
     const [errMessage, setErrMessage] = useState(message);
 
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
-        emailRef.current.focus();
+        firstNameRef.current.focus();
     }, []);
 
     useEffect(() => {
@@ -45,14 +46,12 @@ const SignUpForm = ({toggleModals, modals}) => {
 
     useEffect(() => {
         const result = PASSWORD_REGEX.test(password);
-        setValidPassword(result);
-        const match = password === matchPassword;
-        setValidMatch(match);
-    }, [password, matchPassword]);
+        setValidPassword(result);;
+    }, [password]);
 
     useEffect(() => {
         setErrMessage('');
-    }, [email, password, matchPassword]);
+    }, [email, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,26 +76,69 @@ const SignUpForm = ({toggleModals, modals}) => {
         const verify = {
             preventDefault: () => {},
             target: {
-                id: modals.VERIFY.id,
+                id: forms.VERIFY.id,
             }
         }
         
-        if(status === DataStatusEnum.SUCCESS) toggleModals(verify);
+        if(status === DataStatusEnum.SUCCESS) toggleForms(verify);
         if(status !== DataStatusEnum.PENDING) setDisabled(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
+    const facebook = (e) => {
+        e.preventDefault();
+        dispatch(authorize({service: '/facebook', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
+    }
+
+    const github = (e) => {
+        e.preventDefault();
+        dispatch(authorize({service: '/github', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
+    }
+
     return (
         <section css={styles.wrapper}>
+            <h1>Sign up</h1>
+            <p css={styles.smallInfo}>Already have an account? <ResetButton text='Sign In' onClick={toggleForms} id={forms.SIGN_IN.id} /></p>
+            <OAuthLink icon={faGoogle} text='Login with Google' to={'http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:8080/regsiter-step2'} />
+            <OAuthButton icon={faFacebook} text='Login with Facebook' onClick={facebook} />
+            <OAuthButton icon={faGithub} text='Login with Github' onClick={github} />
+            <h5>OR</h5>
+            <h1>Create an account</h1>
             <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
-            <h1>Register</h1>
             <form onSubmit={handleSubmit} css={styles.signForm}>
+                <div css={styles.credentials}>
+                    <div css={styles.inputContainer}>
+                        <Input 
+                            type='text' 
+                            id='first-name' 
+                            inputRef={firstNameRef}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            value={firstName}
+                            autoComplete='off'
+                            required
+
+                            label='Fist name:'
+                        />
+                    </div>
+                
+                    <div css={styles.inputContainer}>
+                        <Input 
+                            type='password' 
+                            id='last-name' 
+                            onChange={(e) => setLastName(e.target.value)}
+                            value={lastName}
+                            required
+
+                            label='Last name:'
+                        />
+                    </div>
+                </div>
+
                 <div css={styles.inputContainer}>
                     <Input 
                         type='text' 
                         id='email' 
-                        inputRef={emailRef}
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                         autoComplete='off'
@@ -150,48 +192,12 @@ const SignUpForm = ({toggleModals, modals}) => {
 
                     <p id='pwdnote' css={passwordFocus && !validPassword ? styles.instructions : styles.offscreen}>
                         <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} />
-                        Must include uppercase and lowercase letters, a number and a special character.<br />
+                        Need upper/lowercase letters, number, & special character.<br />
                     </p>
                 </div>
-                
-                <div css={styles.inputContainer}>
-                    <Input 
-                        type='password' 
-                        id='confirm_password'
-                        onChange={(e) => setMatchPassword(e.target.value)}
-                        required
-                        aria-invalid={validMatch ? 'false' : 'true'}
-                        aria-describedby='confirmnote'
-                        onFocus={() => setMatchFocus(true)}
-                        onBlur={() => setMatchFocus(false)}
-
-                        label='Confirm Password:'
-                    >
-                        
-                        <span css={validMatch && matchPassword ? styles.valid : styles.hide}>
-                            <FontAwesomeIcon icon={faCheck} />
-                        </span>
-                        <span css={validMatch || !matchPassword ? styles.hide : styles.invalid}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </span>
-                        
-                    </Input>
-
-                    <p id='confirmnote' css={matchFocus && !validMatch ? styles.instructions : styles.offscreen}>
-                        <FontAwesomeIcon icon={faInfoCircle} css={styles.warning} />
-                        Must match the first password input field.
-                    </p>
-                </div>
-                
-                <Button text='Sign Up' disabled={!validEmail || !validPassword || !validMatch || !disabled} />
+                <p css={styles.smallInfo}>By signing up, you agree to the Terms or Service anf Privacy Policy, including Cookie Use.</p>
+                <Button text='Sign Up' disabled={!validEmail || !validPassword || !disabled} circles={true} shape={ButtonShapeEnum.RECTANGLE} />
             </form>
-
-            <p css={styles.link}>
-                Already have an account?<br />
-                <span css={styles.line}>
-                    <ResetButton text='Sign In' onClick={toggleModals} id={modals.SIGN_IN.id} />
-                </span>
-            </p>
         </section>
     )
 }

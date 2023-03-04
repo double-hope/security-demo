@@ -2,7 +2,7 @@ import React from 'react';
 import * as styles from './styles';
 import { Button, ResetButton } from 'components/primitives';
 
-const TechnicalSupport = ({toggleModals, modals}) => {
+const TechnicalSupport = ({toggleForms, forms}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +25,7 @@ const TechnicalSupport = ({toggleModals, modals}) => {
             <p css={styles.link}>
                 or<br />
                 <span css={styles.line}>
-                    <ResetButton text='Sign Up' onClick={toggleModals} id={modals.SIGN_UP.id} />
+                    <ResetButton text='Sign Up' onClick={toggleForms} id={forms.SIGN_UP.id} />
                 </span>
             </p>
 

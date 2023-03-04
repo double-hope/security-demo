@@ -7,16 +7,32 @@ export const wrapper = () => css`
 `;
 
 export const layout = () => css`
-    background-image: url(${back});
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 100vh;
+    background: linear-gradient(
+        45deg, 
+        #0d02f595, 
+        #1dc3c795, 
+        #a834a095, 
+        #ea433595
+        ), url(${back}) center center fixed;
     background-size: cover; 
     background-attachment: fixed;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-auto-rows: 100vh;
+    @media all and (max-width: 900px) {
+        & {
+            grid-template-columns: 1fr;
+        }
+    }
 `;
 
 export const aside = () => css`
     height: 100%;
+    @media all and (max-width: 900px) {
+        & {
+            display: none;
+        }
+    }
 `;
 
 export const signForm = () => css`
@@ -25,21 +41,10 @@ export const signForm = () => css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #00c9e5, #00c0ed, #00b6f3, #00abf7, #009ef8, #55a0f8, #78a2f7, #92a5f5, #b3baf7, #d0d0fa, #e9e7fc, #ffffff);
-    background-size: 400%;
+    background: white;
     font-weight: 900;
     width: 100%;
     height: 100%;
-    animation: bg-animation 10s infinite alternate;
-
-    @keyframes bg-animation {
-        0% {
-            background-position: left;
-        }
-        100% {
-            background-position: right;
-        }
-    }
 `;
 
 export const small = () => css`

@@ -118,4 +118,8 @@ position: relative;
     & * {
         z-index: 1;
     }
+
+    &[button-stretched='true'] {
+        max-width: 300px;
+    }
 `;

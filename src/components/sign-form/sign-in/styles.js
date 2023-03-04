@@ -15,7 +15,14 @@ export const signForm = () => css`
     align-items: center;
     width: 100%;
     margin: 20px;
-    gap: 10px;
+`;
+
+export const smallInfo = () => css`
+    font-size : 10px;
+    max-width: 300px;
+    font-weight: 400;
+    text-align: center;
+    padding: 0 5px;
 `;
 
 export const offscreen = () => css`
@@ -40,7 +47,7 @@ export const link = () => css`
 
 export const inputContainer = () => css`
     position: relative;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     width: 100%;
     max-width: 300px;
 `; 

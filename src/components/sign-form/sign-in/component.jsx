@@ -3,17 +3,19 @@ import * as styles from './styles';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from 'store/auth';
-import { Button, Input, ResetButton } from 'components/primitives';
+import { Button, Input, OAuthButton, OAuthLink, ResetButton } from 'components/primitives';
 import { useAuth } from 'hooks/useAuth';
-import { DataStatusEnum, ResetButtonTypeEnum } from 'common/enums';
+import { ButtonShapeEnum, DataStatusEnum, ResetButtonTypeEnum } from 'common/enums';
 import jwtDecode from 'jwt-decode';
+import { faFacebook, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { authorize } from 'store/oauth';
 
-const SignInForm = ({toggleModals, modals}) => {
+const SignInForm = ({toggleForms, forms}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { setAuth } = useAuth();
-    const { tokens, status } = useSelector(state => state.auth);
+    const { tokens, message, status } = useSelector(state => state.auth);
 
     const emailRef = useRef();
     const errorRef = useRef();
@@ -47,10 +49,25 @@ const SignInForm = ({toggleModals, modals}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
+    const facebook = (e) => {
+        e.preventDefault();
+        dispatch(authorize({service: '/facebook', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
+    }
+
+    const github = (e) => {
+        e.preventDefault();
+        dispatch(authorize({service: '/github', params: { redirect_uri: 'http://localhost:8080/regsiter-step2' }}))
+    }
+
+    useEffect(() => {
+        if(!!message)
+            setErrMessage(message);
+    }, [message]);
+
     return (
         <section css={styles.wrapper}>
+            <h1>Welcome to dbxrhth</h1>
             <p ref={errorRef} css={errMessage ? styles.errmsg : styles.offscreen} aria-live='assertive'>{errMessage}</p>
-            <h1>Sign In</h1>
             <form onSubmit={handleSubmit} css={styles.signForm}>
                 <div css={styles.inputContainer}>
                      <Input 
@@ -77,17 +94,19 @@ const SignInForm = ({toggleModals, modals}) => {
                         label='Password:'
                     />
                 </div>
+                <ResetButton text='Forgot your password?' onClick={toggleForms} type={ResetButtonTypeEnum.BOLD} id={forms.RESET.id} />
                 
-                
-                <Button text='Sign In' />
+                <Button text='Sign In' stretched={true} shape={ButtonShapeEnum.RECTANGLE} />
+
+                <h5>OR</h5>
+                <OAuthLink icon={faGoogle} text='Login with Google' to={'http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:8080/regsiter-step2'} />
+                <OAuthButton icon={faFacebook} text='Login with Facebook' onClick={facebook} />
+                <OAuthButton icon={faGithub} text='Login with Github' onClick={github} />
+                <p css={styles.smallInfo}>By signing up, you agree to the Terms or Service anf Privacy Policy, including Cookie Use.</p>
             </form>
             <p css={styles.link}>
                 Don't have an account?<br />
-                <span css={styles.line}>
-                    <ResetButton text='Sign Up' onClick={toggleModals} id={modals.SIGN_UP.id} />
-                </span>
-                
-                <ResetButton text='Forgot password?' onClick={toggleModals} type={ResetButtonTypeEnum.BOLD} id={modals.RESET.id} />
+                <Button text='Sign up' circles={true} onClick={toggleForms} id={forms.SIGN_UP.id} shape={ButtonShapeEnum.RECTANGLE} />
             </p>
 
         </section>

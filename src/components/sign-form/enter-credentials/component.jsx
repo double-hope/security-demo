@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as styles from './styles';
 import { Button, Input } from 'components/primitives';
 
-const EnterCredentials = ({toggleModals, modals}) => {
+const EnterCredentials = ({toggleForms, forms}) => {
 
     const firstNameRef = useRef();
 

@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import * as styles from './styles';
-import { Button, Input, ResetButton } from 'components/primitives';
+import { Button, Input } from 'components/primitives';
+import { ButtonShapeEnum } from 'common/enums';
 
-const ResetPassword = ({toggleModals, modals}) => {
+const ResetPassword = ({toggleForms, forms}) => {
 
     const emailRef = useRef();
 
@@ -15,7 +16,7 @@ const ResetPassword = ({toggleModals, modals}) => {
     return (
         <section css={styles.wrapper}>
             <h1>Help with your password</h1>
-            <p>write you e-mail and we will send instruction of changing your password</p>
+            <p css={styles.smallInfo}>write you e-mail and we will send instruction of changing your password</p>
             <form onSubmit={handleSubmit} css={styles.signForm}>
                 <div css={styles.inputContainer}>
                      <Input 
@@ -31,13 +32,11 @@ const ResetPassword = ({toggleModals, modals}) => {
                     />
                 </div>                
                 
-                <Button text='Reset password' />
+                <Button text='Reset password' stretched={true} shape={ButtonShapeEnum.RECTANGLE} />
             </form>
             <p css={styles.link}>
-                or<br />
-                <span css={styles.line}>
-                    <ResetButton text='Sign Up' onClick={toggleModals} id={modals.SIGN_UP.id} />
-                </span>
+                Don't have an account yet? <br />
+                <Button text='Sign Up' circles={true} onClick={toggleForms} id={forms.SIGN_UP.id} shape={ButtonShapeEnum.RECTANGLE} />
             </p>
 
         </section>

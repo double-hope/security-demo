@@ -15,7 +15,7 @@ const notify = () => toast.success('Confirm your e-mail and sign in!', {
     theme: "light",
     });
 
-const Verify = ({toggleModals, modals}) => {
+const Verify = ({toggleForms, forms}) => {
 
     const [shownNotify, setShownNotify] = useState(false);
 
@@ -37,7 +37,7 @@ const Verify = ({toggleModals, modals}) => {
             </form>
             <p css={styles.link}>
                 <span css={styles.line}>
-                    <ResetButton text='Sign In' onClick={toggleModals} id={modals.CREDENTIALS.id} />
+                    <ResetButton text='Sign In' onClick={toggleForms} id={forms.CREDENTIALS.id} />
                 </span>
             </p>
 
