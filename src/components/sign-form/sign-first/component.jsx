@@ -5,6 +5,7 @@ import { SignUpForm } from '../sign-up';
 import { ResetPassword, TechnicalSupport } from '../forgot-password';
 import { Verify } from '../verify';
 import { EnterCredentials } from '../enter-credentials';
+import { Background } from 'components/primitives';
 
 const Sign = () => {
 
@@ -50,7 +51,9 @@ const Sign = () => {
   return (
     <div css={styles.wrapper}>
       <div css={styles.layout}>
-        <div css={styles.aside} />
+        <div css={styles.aside}>
+          <Background />
+        </div>
         <div css={styles.signForm}>
             {signInVisible && <SignInForm toggleForms={toggleForms} forms={forms} />}
             {signUpVisible && <SignUpForm toggleForms={toggleForms} forms={forms} />}

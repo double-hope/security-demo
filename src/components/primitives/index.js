@@ -3,3 +3,4 @@ export * from './inputs';
 export * from './modal';
 export * from './footer';
 export * from './links';
+export * from './background';
